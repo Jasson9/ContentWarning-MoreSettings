@@ -14,17 +14,20 @@ namespace MoreSettings
     {
         public override void ApplyValue()
         {
-            UnityEngine.Object cameraObj = Resources.FindObjectsOfTypeAll(typeof(Camera)).FirstOrDefault();
-            Camera camera = cameraObj as Camera;
-            switch (base.Value)
+            UniversalAdditionalCameraData[] camerasData = (UniversalAdditionalCameraData[])Resources.FindObjectsOfTypeAll(typeof(UniversalAdditionalCameraData));
+            foreach (var cameraData in camerasData)
             {
-                case 0:
-                    camera.GetUniversalAdditionalCameraData().renderPostProcessing = true;
-                    break;
-                case 1:
-                    camera.GetUniversalAdditionalCameraData().renderPostProcessing = true;
-                    break;
+                switch (base.Value)
+                {
+                    case 0:
+                        cameraData.renderPostProcessing = false;
+                        break;
+                    case 1:
+                        cameraData.renderPostProcessing = true;
+                        break;
+                }
             }
+
         }
 
         protected override int GetDefaultValue()
@@ -44,7 +47,7 @@ namespace MoreSettings
 
         public string GetDisplayName()
         {
-            return "Post processing";
+            return "Post processing (off = Brightness won't work)";
         }
     }
 }

@@ -44,7 +44,7 @@ namespace MoreSettings
 
         public string GetDisplayName()
         {
-            return "FSR 1.0 (Fidelity Super Resolution)";
+            return "FSR 1.0 (FidelityFx Super Resolution)";
         }
     }
 }

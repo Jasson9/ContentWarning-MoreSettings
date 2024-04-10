@@ -7,8 +7,8 @@
     <ProjectGuid>{BA9B4ADF-0A47-430D-82EF-63130009AA2F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>More_Graphics_Settings</RootNamespace>
-    <AssemblyName>More Graphics Settings</AssemblyName>
+    <RootNamespace>MoreSettings</RootNamespace>
+    <AssemblyName>MoreSettings</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="PostProcessingSetting.cs" />
     <Compile Include="AntiAliasingSetting.cs" />
+    <Compile Include="ShadowChanger.cs" />
     <Compile Include="TextureResolutionSetting.cs" />
     <Compile Include="FSRToggleSetting.cs" />
     <Compile Include="Main.cs" />

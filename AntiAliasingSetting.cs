@@ -15,8 +15,7 @@ namespace MoreSettings
         public override void ApplyValue()
         {
             UniversalRenderPipelineAsset obj = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
-            UnityEngine.Object cameraObj = Resources.FindObjectsOfTypeAll(typeof(Camera)).FirstOrDefault();
-            Camera camera = cameraObj as Camera;
+            Camera[] cameras = (Camera[])Resources.FindObjectsOfTypeAll(typeof(Camera));
             switch (base.Value)
             {
                 case 0:
@@ -25,16 +24,31 @@ namespace MoreSettings
                     QualitySettings.antiAliasing = 0;
                     break;
                 case 1:
-                    obj.msaaSampleCount = 2;
+                    obj.msaaSampleCount = 8;
                     obj.GetRenderer(0).supportedRenderingFeatures.msaa = true;
-                    QualitySettings.antiAliasing = 2;
+                    QualitySettings.antiAliasing = 8;
                     break;
+            }
+            foreach (var camera in cameras)
+            {
+                switch (base.Value) 
+                {
+                    case 0:
+                        camera.allowMSAA = false;
+                        camera.GetUniversalAdditionalCameraData().antialiasing = AntialiasingMode.None;
+                        break;
+                    case 1:
+                        camera.allowMSAA = true;
+                        camera.GetUniversalAdditionalCameraData().antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                        camera.GetUniversalAdditionalCameraData().antialiasingQuality = AntialiasingQuality.High;
+                        break;
+                }
             }
         }
 
         protected override int GetDefaultValue()
         {
-            return 1;
+            return 0;
         }
 
         public override List<string> GetChoices()

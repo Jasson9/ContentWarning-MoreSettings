@@ -8,37 +8,26 @@ using UnityEngine.Rendering;
 using Zorro.Settings;
 using UnityEngine;
 
+
 namespace MoreSettings
 {
     public class AntiAliasingSetting : EnumSetting, IExposedSetting
     {
         public override void ApplyValue()
         {
-            UniversalRenderPipelineAsset obj = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
             Camera[] cameras = (Camera[])Resources.FindObjectsOfTypeAll(typeof(Camera));
-            switch (base.Value)
-            {
-                case 0:
-                    obj.msaaSampleCount = 1;
-                    obj.GetRenderer(0).supportedRenderingFeatures.msaa = false;
-                    QualitySettings.antiAliasing = 0;
-                    break;
-                case 1:
-                    obj.msaaSampleCount = 8;
-                    obj.GetRenderer(0).supportedRenderingFeatures.msaa = true;
-                    QualitySettings.antiAliasing = 8;
-                    break;
-            }
             foreach (var camera in cameras)
             {
-                switch (base.Value) 
+                switch (base.Value)
                 {
                     case 0:
-                        camera.allowMSAA = false;
                         camera.GetUniversalAdditionalCameraData().antialiasing = AntialiasingMode.None;
                         break;
                     case 1:
-                        camera.allowMSAA = true;
+                        camera.GetUniversalAdditionalCameraData().antialiasing = AntialiasingMode.FastApproximateAntialiasing;
+                        camera.GetUniversalAdditionalCameraData().antialiasingQuality = AntialiasingQuality.High;
+                        break;
+                    case 2:
                         camera.GetUniversalAdditionalCameraData().antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
                         camera.GetUniversalAdditionalCameraData().antialiasingQuality = AntialiasingQuality.High;
                         break;
@@ -53,7 +42,7 @@ namespace MoreSettings
 
         public override List<string> GetChoices()
         {
-            return new List<string> { "OFF", "ON" };
+            return new List<string> { "OFF", "FXAA", "SMAA" };
         }
 
         public SettingCategory GetSettingCategory()

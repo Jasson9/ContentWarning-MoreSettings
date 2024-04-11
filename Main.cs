@@ -11,70 +11,75 @@ using MoreSettings;
 using Zorro.Settings;
 using UnityEngine.Rendering;
 using Unity.Mathematics;
+using UnityEngine.UI;
+using System.IO;
+using Zorro.Core;
+using Setting = Zorro.Settings.Setting;
+using MoreSettings.Settings.Type;
+using MoreSetting;
 
 namespace MoreSettings
 {
-    [BepInPlugin("MoreSettings","More Settings","0.0.2")]
+    [BepInPlugin("MoreSettings","More Settings","0.1.0")]
     public class Plugin : BaseUnityPlugin 
     {
         private Harmony harmony;
         static internal List<Setting> additionalSettings = new List<Setting>();
+        static internal List<IPatch> patches = new List<IPatch>();
         private void Awake()
         {
             Logger.LogInfo("MoreSettings Loaded!!!");
 
             addSetting(new RenderScaleSetting());
-            addSetting(new FSRToogleSetting());
+            addSetting(new FSRToggleSetting());
             addSetting(new FSRSharpnessSetting());
             addSetting(new TextureResolutionSetting());
             addSetting(new AntiAliasingSetting());
             addSetting(new PostProcessingSetting());
+            addSetting(new FOVSetting());
+            addSetting(new RecordSaveSetting());
+            addSetting(new CrouchingModeSetting());
+
+            addPatches(new ShadowQualityPatch());
+            addPatches(new VoiceVolumePatch());
+            addPatches(new SFXVolumePatch());
+            addPatches(new MasterVolumePatch());
 
             harmony = new Harmony("MoreSettings");
-            harmony.PatchAll(typeof(GraphicsPatch));
+            harmony.PatchAll(typeof(MainPatch));
+            ApplyPatches();
+        }
+
+        internal void ApplyPatches()
+        {
+            foreach (var setting in additionalSettings)
+            {
+                if(setting is IPatch)
+                {
+                    var t = setting as IPatch;
+                    t.ApplyPatch(ref harmony);
+                }
+            }
+
+            foreach (var patch in patches)
+            {
+                patch.ApplyPatch(ref harmony);
+            }
         }
 
         public static void addSetting(Setting setting)
         {
             additionalSettings.Add(setting);
         }
+
+        internal static void addPatches(IPatch patch)
+        {
+            patches.Add(patch);
+        }
     }
 
-    public class GraphicsPatch
+    public class MainPatch
     {
-        [HarmonyPatch(typeof(ShadowQualitySetting), "SetShadowSettings")]
-        [HarmonyPrefix]
-        static void PatchShadowQualityApply(ShadowQualitySetting __instance, ref UnityEngine.Rendering.Universal.ShadowResolution shadowResolution, ref float shadowDistance)
-        {
-            if(__instance.Value == 2)
-            {
-                shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._256;
-                shadowDistance = 30f;
-            }
-            else if(__instance.Value == 3)
-            {
-                shadowResolution = 0;
-                shadowDistance = 0;
-            }
-        }
-
-        [HarmonyPatch(typeof(ShadowQualitySetting), "SetShadowSettings")]
-        [HarmonyPostfix]
-        static void postPatchShadow(ShadowQualitySetting __instance, ref UnityEngine.Rendering.Universal.ShadowResolution shadowResolution, ref float shadowDistance)
-        {
-            UniversalRenderPipelineAsset obj = GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;
-            // fix incorect shadow resolution implementation. High setting has lower resolution than low
-            ShadowChanger.AdditionalLightShadowResolution = shadowResolution;
-            ShadowChanger.MainLightShadowResolution = shadowResolution;
-            Debug.Log("Shadow Resolution " + obj.mainLightShadowmapResolution + " [MoreSettings]");
-        }
-
-        [HarmonyPatch(typeof(ShadowQualitySetting), "GetChoices")]
-        [HarmonyPostfix]
-        static void PatchShadowQualityChoices(ref List<string> __result)
-        {
-            __result =  new List<string> { "High", "Low" , "Lowest", "Off"};
-        }
 
         [HarmonyPatch(typeof(SettingsHandler),MethodType.Constructor)]
         [HarmonyPostfix]
@@ -89,7 +94,6 @@ namespace MoreSettings
                 setting.Load(settingsSaveLoad);
                 setting.ApplyValue();
             }
-            Tools.settings = settings;
             Debug.Log("Settings Patch Applied [MoreSettings]");
         }
 

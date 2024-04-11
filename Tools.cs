@@ -11,7 +11,6 @@ namespace MoreSettings
 {
     public class Tools
     {
-        internal static List<Setting> settings;
 
         public static void LogMessage(string message)
         {
@@ -21,7 +20,7 @@ namespace MoreSettings
 
         public static void ApplySettings()
         {
-            foreach (var setting in settings)
+            foreach (var setting in GameHandler.Instance.SettingsHandler.GetAllSettingsNonAlloc())
             {
                 setting.ApplyValue();
             }

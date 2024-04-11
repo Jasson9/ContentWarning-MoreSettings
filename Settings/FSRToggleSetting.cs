@@ -9,7 +9,7 @@ using Zorro.Settings;
 
 namespace MoreSettings
 {
-    public class FSRToogleSetting : EnumSetting, IExposedSetting
+    public class FSRToggleSetting : EnumSetting, IExposedSetting
     {
         public override void ApplyValue()
         {

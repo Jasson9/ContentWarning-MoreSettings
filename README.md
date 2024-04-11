@@ -6,11 +6,15 @@ NOTE: these settings will impact both the camera and the player
 ## Features
 - Add lowest and off shadow option
 - FSR v1.0
-- Add anti aliasing
-- Add render scale setting
-- Add option to adjust texture resolution
-- Add pre processing setting (off = brightness won't work)
+- Anti aliasing
+- Render scale setting
+- Setting to adjust texture resolution
+- Pre processing setting (off = brightness won't work)
 - fix incorrect shadow resolution implementation
+- Custom Video Recording Location
+- Custom FOV
+- increased volume limit
+- Crouch Mode (Toggle/Hold)
 
 ## Installation 
 1. Download and install Thunderstore mod manager.
@@ -22,4 +26,4 @@ NOTE: these settings will impact both the camera and the player
 2. Download this mod and extract it inside the **plugin** of **BepInEx** folder
 
 ## Contribution
-Any form of contribution is welcomed
+Any form of contribution is welcomed.

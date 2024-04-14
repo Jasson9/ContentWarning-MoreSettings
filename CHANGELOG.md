@@ -1,3 +1,9 @@
+# 0.2.0
+- Add Use Item Keybind Option
+- Add Aim Keybind Option
+- Add HDR Toggle
+- Reset To Default Button (Graphics/Audio/Controls)
+
 # 0.1.0
 - Custom Video Recording Location
 - Custom FOV

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     internal class MasterVolumePatch:IPatch
     {

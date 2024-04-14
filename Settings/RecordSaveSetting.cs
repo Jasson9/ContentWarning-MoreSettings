@@ -16,7 +16,7 @@ using System.IO;
 using Zorro.Core;
 using MoreSettings.Settings.Type;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class RecordSaveSetting : StringSetting, IExposedSetting, IPatch
     {

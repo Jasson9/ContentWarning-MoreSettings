@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 using Zorro.Settings;
 using UnityEngine;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class TextureResolutionSetting : EnumSetting, IExposedSetting
     {

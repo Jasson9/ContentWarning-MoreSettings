@@ -9,7 +9,7 @@ using Zorro.Settings;
 using HarmonyLib;
 using MoreSettings.Settings.Type;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class CrouchingModeSetting : EnumSetting, IExposedSetting, IPatch
     {

@@ -37,9 +37,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Settings\FOVSetting.cs" />
+    <Compile Include="Settings\HDRSetting.cs" />
+    <Compile Include="Settings\KeybindPatch.cs" />
     <Compile Include="Settings\MasterVolumePatch.cs" />
+    <Compile Include="Settings\ResetControlsToDefault.cs" />
+    <Compile Include="Settings\ResetAudioToDefault.cs" />
+    <Compile Include="Settings\ResetGraphicsToDefault.cs" />
     <Compile Include="Settings\SFXVolumePatch.cs" />
     <Compile Include="Settings\Type\IPatch.cs" />
+    <Compile Include="Settings\AimKeybindSetting.cs" />
+    <Compile Include="Settings\UseItemKeybindSetting.cs" />
     <Compile Include="Settings\VoiceVolumePatch.cs" />
     <Compile Include="Settings\CrouchingModeSetting.cs" />
     <Compile Include="Settings\PostProcessingSetting.cs" />
@@ -48,7 +55,7 @@
     <Compile Include="Settings\Type\StringSetting.cs" />
     <Compile Include="Settings\TextureResolutionSetting.cs" />
     <Compile Include="Settings\FSRToggleSetting.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="MoreSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\FSRSharpnessSetting.cs" />
     <Compile Include="Settings\RenderScaleSetting.cs" />
@@ -435,6 +442,11 @@
     <Reference Include="Zorro.Settings.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Zorro.Settings.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Zorro.UI.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Zorro.UI.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

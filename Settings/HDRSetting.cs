@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using Zorro.Settings;
 
 namespace MoreSettings.Settings
 {
-    public class FSRToggleSetting : EnumSetting, IExposedSetting
+    public class HDRSetting : EnumSetting, IExposedSetting
     {
         public override void ApplyValue()
         {
@@ -17,19 +13,17 @@ namespace MoreSettings.Settings
             switch (base.Value)
             {
                 case 0:
-                    obj.upscalingFilter = UpscalingFilterSelection.Auto;
-                    obj.fsrOverrideSharpness = false;
+                    obj.supportsHDR = false;
                     break;
                 case 1:
-                    obj.upscalingFilter = UpscalingFilterSelection.FSR;
-                    obj.fsrOverrideSharpness = true;
+                    obj.supportsHDR = true;
                     break;
             }
         }
 
         protected override int GetDefaultValue()
         {
-            return 0;
+            return 1;
         }
 
         public override List<string> GetChoices()
@@ -44,7 +38,7 @@ namespace MoreSettings.Settings
 
         public string GetDisplayName()
         {
-            return "FSR 1.0 (FidelityFx Super Resolution)";
+            return "High Dynamic Range (HDR)";
         }
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine;
 using ShadowResolution = UnityEngine.Rendering.Universal.ShadowResolution;
 using MoreSettings.Settings.Type;
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     internal class ShadowQualityPatch:IPatch
     {
@@ -53,7 +53,7 @@ namespace MoreSettings
             harmony.PatchAll(typeof(ShadowQualityPatch));
         }
 
-        // for some reason unity doesn't makes setter at shadow related fields private so it has to be this way, props to JimmyCushnie for the code snippet
+        // for some reason unity doesn't makes setter at shadow related fields public so it has to be this way, props to JimmyCushnie for the code snippet
         public static class ShadowChanger
         {
             private static FieldInfo MainLightCastShadows_FieldInfo;

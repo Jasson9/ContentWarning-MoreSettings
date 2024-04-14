@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace MoreSetting
+namespace MoreSettings.Settings
 {
     internal class VoiceVolumePatch: IPatch
     {

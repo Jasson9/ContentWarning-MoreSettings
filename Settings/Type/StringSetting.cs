@@ -9,7 +9,7 @@ using Zorro.Core;
 using Zorro.Settings;
 using Zorro.Settings.DebugUI;
 
-namespace MoreSettings
+namespace MoreSettings.Settings.Type
 {
     public abstract class StringSetting : Setting
     {

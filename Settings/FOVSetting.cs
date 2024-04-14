@@ -11,7 +11,7 @@ using MoreSettings.Settings.Type;
 using HarmonyLib;
 using UnityEngine;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class FOVSetting : FloatSetting, IExposedSetting, IPatch
     {

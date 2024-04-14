@@ -9,7 +9,7 @@ using Zorro.Settings;
 using UnityEngine;
 
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class AntiAliasingSetting : EnumSetting, IExposedSetting
     {

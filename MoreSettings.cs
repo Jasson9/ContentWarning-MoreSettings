@@ -1,27 +1,17 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using MoreSettings;
 using Zorro.Settings;
-using UnityEngine.Rendering;
-using Unity.Mathematics;
-using UnityEngine.UI;
-using System.IO;
-using Zorro.Core;
 using Setting = Zorro.Settings.Setting;
 using MoreSettings.Settings.Type;
-using MoreSetting;
+using MoreSettings.Settings;
 
 namespace MoreSettings
 {
-    [BepInPlugin("MoreSettings","More Settings","0.1.0")]
-    public class Plugin : BaseUnityPlugin 
+    [BepInPlugin("MoreSettings","More Settings","0.2.0")]
+    public class MoreSettings : BaseUnityPlugin 
     {
         private Harmony harmony;
         static internal List<Setting> additionalSettings = new List<Setting>();
@@ -30,20 +20,28 @@ namespace MoreSettings
         {
             Logger.LogInfo("MoreSettings Loaded!!!");
 
-            addSetting(new RenderScaleSetting());
-            addSetting(new FSRToggleSetting());
-            addSetting(new FSRSharpnessSetting());
-            addSetting(new TextureResolutionSetting());
-            addSetting(new AntiAliasingSetting());
-            addSetting(new PostProcessingSetting());
-            addSetting(new FOVSetting());
-            addSetting(new RecordSaveSetting());
-            addSetting(new CrouchingModeSetting());
+            addSetting(new Settings.HDRSetting());
+            addSetting(new Settings.RenderScaleSetting());
+            addSetting(new Settings.FSRToggleSetting());
+            addSetting(new Settings.FSRSharpnessSetting());
+            addSetting(new Settings.TextureResolutionSetting());
+            addSetting(new Settings.AntiAliasingSetting());
+            addSetting(new Settings.PostProcessingSetting());
+            addSetting(new Settings.FOVSetting());
+            addSetting(new Settings.RecordSaveSetting());
+            addSetting(new Settings.CrouchingModeSetting());
+            addSetting(new Settings.UseItemKeybindSetting());
+            addSetting(new Settings.AimKeybindSetting());
+            addSetting(new ResetGraphicsToDefault());
+            addSetting(new ResetAudioToDefault());
+            addSetting(new ResetControlsToDefault());
 
             addPatches(new ShadowQualityPatch());
             addPatches(new VoiceVolumePatch());
             addPatches(new SFXVolumePatch());
             addPatches(new MasterVolumePatch());
+            addPatches(new KeybindPatch());
+            //addPatches(new ResetToDefault());
 
             harmony = new Harmony("MoreSettings");
             harmony.PatchAll(typeof(MainPatch));
@@ -51,7 +49,7 @@ namespace MoreSettings
         }
 
         internal void ApplyPatches()
-        {
+        {   
             foreach (var setting in additionalSettings)
             {
                 if(setting is IPatch)
@@ -78,7 +76,7 @@ namespace MoreSettings
         }
     }
 
-    public class MainPatch
+    internal class MainPatch
     {
 
         [HarmonyPatch(typeof(SettingsHandler),MethodType.Constructor)]
@@ -87,9 +85,9 @@ namespace MoreSettings
         {
             var settings = Traverse.Create(__instance).Field("settings").GetValue() as List<Setting>;
             var settingsSaveLoad = Traverse.Create(__instance).Field("_settingsSaveLoad").GetValue() as ISettingsSaveLoad;
-            settings = settings.Concat(Plugin.additionalSettings).ToList();
+            settings = settings.Concat(MoreSettings.additionalSettings).ToList();
             Traverse.Create(__instance).Field("settings").SetValue(settings);
-            foreach (Setting setting in Plugin.additionalSettings)
+            foreach (Setting setting in MoreSettings.additionalSettings)
             {
                 setting.Load(settingsSaveLoad);
                 setting.ApplyValue();

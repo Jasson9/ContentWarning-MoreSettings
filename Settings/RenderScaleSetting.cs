@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using Zorro.Settings;
 
-namespace MoreSettings
+namespace MoreSettings.Settings
 {
     public class RenderScaleSetting : FloatSetting, IExposedSetting
     {

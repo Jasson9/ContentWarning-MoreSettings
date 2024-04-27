@@ -10,7 +10,8 @@ using MoreSettings.Settings;
 
 namespace MoreSettings
 {
-    [BepInPlugin("MoreSettings","More Settings","0.2.0")]
+    [ContentWarningPlugin("MoreSettings","0.2.1", true)]
+    [BepInPlugin("MoreSettings","More Settings","0.2.1")]
     public class MoreSettings : BaseUnityPlugin 
     {
         private Harmony harmony;
